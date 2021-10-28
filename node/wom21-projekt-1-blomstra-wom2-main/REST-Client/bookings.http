@@ -1,0 +1,47 @@
+### Testfil för VSCode-tillägget REST Client
+
+@baseUrl = http://localhost:3030
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNTVlMmUzYWE0OWU0ZGJlNzc5MzVlMiIsImVtYWlsIjoiZ29yYTNuZDFAbWFpbi5jb20iLCJpYXQiOjE2MzMwMTg2MDIsImV4cCI6MTYzMzEwNTAwMn0.XzKaWSksegdDJsH3__uWn4AYyMio68Se0rVHdnZRD60
+###
+// Get alla bokningar
+GET {{baseUrl}}/bookings/
+Authorization: Bearer {{jwt}}
+###
+// Lägg till en bokning
+// Datumen är yyyy-mm-dd
+POST {{baseUrl}}/bookings/
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+	"cabin" : "61559a87535ce91ba69a1c52",
+	"startDate" : "2031-02-12",
+	"endDate" : "2032-03-5" 
+}
+###
+// Patch kan man ändra på ett eller flera fält på samma gång
+// /bookings/id/
+PATCH  {{baseUrl}}/bookings/6157026104a6d08d53ee6a03
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+    "startDate": "2050-01-20"
+}
+###
+// PUT behöver allt info för att kunna ändra på bokningen
+// /bookings/id/
+PUT  {{baseUrl}}/bookings/6157026104a6d08d53ee6a03
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+	"cabin" : "61559b6aad04fd6dbbe250b3",
+    "startDate" : "2021-01-01",
+    "endDate" : "2021-02-01"
+}
+###
+// Ta bort en bokning, /bookings/id/ (finns ingent archived, de blir direkt borttagna)
+DELETE  {{baseUrl}}/bookings/6156f9fd522f439108b45533
+Authorization: Bearer {{jwt}}
+###

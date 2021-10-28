@@ -1,0 +1,59 @@
+### Testfil för VSCode-tillägget REST Client
+
+@baseUrl = http://localhost:3030
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNTVlMmUzYWE0OWU0ZGJlNzc5MzVlMiIsImVtYWlsIjoiZ29yYTNuZDFAbWFpbi5jb20iLCJpYXQiOjE2MzMwMTg2MDIsImV4cCI6MTYzMzEwNTAwMn0.XzKaWSksegdDJsH3__uWn4AYyMio68Se0rVHdnZRD60
+###
+// GET en stuga med id, /cabins/id/
+GET {{baseUrl}}/cabins/61559b6aad04fd6dbbe250b3
+Authorization: Bearer {{jwt}}
+###
+// GET alla stugor
+GET {{baseUrl}}/cabins/
+Authorization: Bearer {{jwt}}
+###
+// Lägg till stugor
+// extraInfo är valfrit, allt annt måste vara med
+POST {{baseUrl}}/cabins/
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+	"address": "Mitt lilla hus1",
+	"sqm": 24,
+	"sauna": true,
+	"beach": false,
+	"price": 399,
+	"beds": 1,
+    "extraInfo" : "Detta är extra info"
+}
+###
+// Ta bort en stuga, /cabins/id/
+DELETE  {{baseUrl}}/cabins/6155e6e339926ad7cbac56ba
+Authorization: Bearer {{jwt}}
+###
+// PUT behöver allt info för att kunna ändra på stugan (extraInfo är inte nödvändigt)
+// /cabins/id/
+PUT  {{baseUrl}}/cabins/6155e74639926ad7cbac56be
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+	"address": "Mitt lilla hus1",
+	"sqm": 24,
+	"sauna": true,
+	"beach": false,
+	"price": 399,
+	"beds": 1
+}
+
+###
+// Patch kan man ändra på ett ellet flera fält på samma gång
+// /cabins/id/
+PATCH  {{baseUrl}}/cabins/6155e74639926ad7cbac56be
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+    "price": 599
+}
+###

@@ -1,0 +1,29 @@
+### Testfil för VSCode-tillägget REST Client
+
+@baseUrl = http://localhost:3030
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNTVlMmUzYWE0OWU0ZGJlNzc5MzVlMiIsImVtYWlsIjoiZ29yYTNuZDFAbWFpbi5jb20iLCJpYXQiOjE2MzMwMTg2MDIsImV4cCI6MTYzMzEwNTAwMn0.XzKaWSksegdDJsH3__uWn4AYyMio68Se0rVHdnZRD60
+###
+// Registrera en användare
+POST {{baseUrl}}/users/
+Content-Type: application/json
+
+{
+    "email" : "test@mail.com",
+    "password": "123",
+    "firstName" : "Test",
+    "lastName" : "User"
+}
+###
+// Logga in 
+POST {{baseUrl}}/users/login/
+Content-Type: application/json
+
+{
+    "email" : "test@mail.com",
+    "password" : "123"
+}
+###
+// Lista alla användare
+GET {{baseUrl}}/users/
+Authorization: Bearer {{jwt}}
+###
