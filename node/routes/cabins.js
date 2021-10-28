@@ -5,6 +5,18 @@ const User = require('../models/users')
 const requireJwt = require("../middleware/requireJwt")
 const getCabinById = require("../middleware/getCabinById")
 
+// Man måste vara inloggad för att kunna se vilka stugot man har
+router.get('/owned', requireJwt,async (req, res) => {
+    try {
+        console.log(req.user)
+        const cabins = await Cabin.find({owner:req.user.id})
+        res.send(cabins)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+
+})
+
 // Man måste vara inloggad för att kunna se stugor
 router.get('/:id', requireJwt,async (req, res) => {
     try {
@@ -20,6 +32,17 @@ router.get('/:id', requireJwt,async (req, res) => {
 router.get('/', requireJwt,async (req, res) => {
     try {
         const cabins = await Cabin.find({archived:false})
+        res.send(cabins)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+
+})
+
+// Man måste vara inloggad för att kunna se vilka stugot man har
+router.get('/owned', requireJwt,async (req, res) => {
+    try {
+        const cabins = await Cabin.find({owner:req.owner})
         res.send(cabins)
     } catch (error) {
         res.status(500).json({ message: error.message })
