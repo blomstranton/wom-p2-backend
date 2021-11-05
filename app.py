@@ -43,7 +43,7 @@ class User(db.Model):
 #notes_token = os.environ.get('NOTES_TOKEN')
 
 try:
-    url = 'https://wom21-notes.azurewebsites.net/users/login'
+    url = 'https://node-backend-blomstra.herokuapp.com/users/login'
     header = { 'Content-Type': 'application/json' }
     body = {  "email": "jane@doe.com",  "password": os.environ.get('NOTES_PASSWORD')}
 
