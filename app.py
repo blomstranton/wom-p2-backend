@@ -40,6 +40,18 @@ class Service(db.Model):
     def __refr__(self):
         return '<Service {}>'.format(self.name)
 
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    service_id = db.Column(db.Integer(), nullable=False)
+    start_date = db.Column(db.DateTime(), nullable=False)
+    end_date = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(
+        db.DateTime(), default=db.func.now(), onupdate=db.func.now())
+
+    def __refr__(self):
+        return '<Order {}>'.format(self.id)
+
     # För att skapa tabellen via terminalen:
     #
     # python
@@ -66,8 +78,9 @@ try:
 except Exception as e:
     print(e)
 
-
 # Default route to /
+
+
 @app.route("/", methods=['GET', 'POST', 'PUT'])
 def index():
     ret = []
@@ -107,6 +120,26 @@ def services():
         db.session.add(new_service)
         db.session.commit()
         ret = ["added new service!"]
+
+    return jsonify(ret)
+
+
+@app.route("/orders/", methods=['GET', 'POST', 'PUT', 'DELETE'])
+def orders():
+    ret = []
+    if request.method == 'GET':
+        # Loopa varje rad i order-tabellen och lägg till i ret
+        for u in Order.query.all():
+            ret.append({'id': u.id, 'service_id': u.service_id, 'start_date': u.start_date, 'end_date': u.end_date,
+                       'updated_at': u.updated_at})
+
+    if request.method == 'POST':
+        body = request.get_json()
+        new_order = Order(
+            service_id=body['service_id'], start_date=body['start_date'], end_date=body['end_date'], )
+        db.session.add(new_order)
+        db.session.commit()
+        ret = ["added new order!"]
 
     return jsonify(ret)
 
